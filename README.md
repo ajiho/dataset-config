@@ -11,7 +11,7 @@
 遵循 [`dataset`规范](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset) 从dom上提取属性并提供了一些有用的额外功能,灵感来源于[lilconfig](https://github.com/antonk52/lilconfig)、[cosmiconfig](https://github.com/cosmiconfig/cosmiconfig)
 
 > [!NOTE]
-> 如果您在开发js插件时,想支持通过`data-*`属性的方式初始化和传递参数,那么这个库对您来说尤其有用,如果您是一个喜欢用原生js开发插件的狂热爱好者,那么把这部分逻辑抽离出来,会让您的库变得更加优雅和简洁。
+> 如果您在开发js插件时,想支持通过`data-*`属性的方式初始化时传递参数,那么这个库对您来说尤其有用,如果您是一个喜欢用原生js开发插件的狂热爱好者,那么把这部分逻辑抽离出来,会让您的库变得更加优雅和简洁。
 
 ## 特性
 

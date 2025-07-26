@@ -25,3 +25,6 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: ajiho/dataset-config
+          fail_ci_if_error: true
+          verbose: true
