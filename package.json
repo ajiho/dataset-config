@@ -77,7 +77,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^9.26.0",
     "eslint-plugin-unicorn": "^59.0.1",
-    "execa": "^9.5.3",
+    "execa": "^9.6.0",
     "fs-extra": "^11.3.0",
     "globals": "^16.1.0",
     "gzip-size-cli": "^5.1.0",
