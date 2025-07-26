@@ -8,18 +8,21 @@
 
 ---
 
-遵循 [`dataset`规范](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset) 从dom上提取属性并提供了一些有用的额外功能
+遵循 [`dataset`规范](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset) 从dom上提取属性并提供了一些有用的额外功能,灵感来源于[lilconfig](https://github.com/antonk52/lilconfig)、[cosmiconfig](https://github.com/cosmiconfig/cosmiconfig)
 
 > [!NOTE]
-> 如果您在开发js插件时,想支持通过`data-*`属性的方式初始化和传递参数,那么这个库对您来说尤其有用
+> 如果您在开发js插件时,想支持通过`data-*`属性的方式初始化和传递参数,那么这个库对您来说尤其有用,如果您是一个喜欢用原生js开发插件的狂热爱好者,那么把这部分逻辑抽离出来,会让您的库变得更加优雅和简洁。
 
 ## 特性
 
-- 支持 true/false/number/JSON 解析
+- 零依赖
+- 超小的体积(minified and brotlied: <= 500B)
+- 支持 true/false/number/JSON 自动解析
 - 支持前缀过滤
 - 支持无限层点语法对象解析
 - 支持全局函数解析
 - 支持排除字段
+- 支持 AMD/CommonJS
 
 ## 安装
 
@@ -33,8 +36,13 @@
 
 ## 用法
 
-```html
-<div
+```js
+import datasetConfig from "datasetConfig"
+
+const options = datasetConfig(el, {})
+
+// 例子
+/* <div
   data-toggle="plugin"
   data-touch-delay="300"
   data-style.z-index="10000"
@@ -48,43 +56,36 @@
   data-rect="[2,3]"
   data-config.foo.bar="hello"
   data-on-init="init"
-></div>
+></div> */
 
-<script>
-  function init() {}
+// options的解析结果如下:
 
-  const el = document.querySelector("[data-toggle]")
-
-  let config = datasetConfig(el, options)
-
-  // config最终的结果会被转换为如下形式:
-  config = {
-    toggle: "plugin",
-    touchDelay: 300,
-    style: {
-      zIndex: 10000,
+/* {
+  toggle: "plugin",
+  touchDelay: 300,
+  style: {
+    zIndex: 10000,
+  },
+  position: {
+    x: 100,
+    y: 200,
+  },
+  draggable: true,
+  onInit: func,
+  direction: "horizontal",
+  appMaxItems: 5,
+  appOtherSomething: "should-ignore",
+  options: {
+    a: 1,
+    b: [2, 3],
+  },
+  rect: [2, 3],
+  config: {
+    foo: {
+      bar: "hello",
     },
-    position: {
-      x: 100,
-      y: 200,
-    },
-    draggable: true,
-    onInit: func,
-    direction: "horizontal",
-    appMaxItems: 5,
-    appOtherSomething: "should-ignore",
-    options: {
-      a: 1,
-      b: [2, 3],
-    },
-    rect: [2, 3],
-    config: {
-      foo: {
-        bar: "hello",
-      },
-    },
-  }
-</script>
+  },
+} */
 ```
 
 ## 选项
@@ -117,6 +118,6 @@ let config = datasetConfig(el, {
 
 ## License
 
-[MIT](https://github.com/ajiho/dataset-config/blob/master/LICENSE)
+[MIT](https://github.com/ajiho/dataset-config/blob/main/LICENSE)
 
 Copyright (c) 2025-present, ajiho
