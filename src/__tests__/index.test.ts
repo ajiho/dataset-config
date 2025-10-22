@@ -1,7 +1,15 @@
-import DatasetParser from "../src/DatasetParser"
+import { describe, it, expect, beforeEach, afterEach } from "vitest"
+import datasetConfig from "../index.js"
 
-describe("DatasetParser", () => {
-  let element, element2
+declare global {
+  interface Window {
+    init?: () => string
+  }
+}
+
+describe("datasetConfig", () => {
+  let element: HTMLElement
+  let element2: HTMLElement
 
   beforeEach(() => {
     document.body.innerHTML = `
@@ -28,21 +36,19 @@ describe("DatasetParser", () => {
       data-age="100"
       data-agree="true"
     ></div>
-
     `
-
     window.init = () => "全局函数"
-    element = document.querySelector("[data-toggle]")
-    element2 = document.querySelector("#element2")
+    element = document.querySelector<HTMLElement>("[data-toggle]")!
+    element2 = document.querySelector<HTMLElement>("#element2")!
   })
 
   afterEach(() => {
     delete window.init
   })
 
-  test("默认选项测试", () => {
-    const parser = new DatasetParser(element)
-    const data = parser.parse()
+  it("默认选项测试 ", () => {
+    // const parser = new DatasetParser(element)
+    const data = datasetConfig(element)
 
     expect(data).toEqual({
       toggle: "plugin",
@@ -75,9 +81,8 @@ describe("DatasetParser", () => {
     })
   })
 
-  test("测试带前缀的解析", () => {
-    const parser = new DatasetParser(element, { prefix: "app" })
-    const data = parser.parse()
+  it("测试带前缀的解析", () => {
+    const data = datasetConfig(element, { prefix: "app" })
 
     expect(data).toEqual({
       position: {
@@ -85,30 +90,26 @@ describe("DatasetParser", () => {
           backgroundColor: 300,
         },
       },
-
       maxItems: 5,
       otherSomething: "should-ignore",
     })
   })
 
-  test("携带前缀且排除某个key", () => {
-    const parser = new DatasetParser(element, {
+  it("携带前缀且排除某个key", () => {
+    const data = datasetConfig(element, {
       prefix: "app",
       excludeKeys: ["position"],
     })
-    const data = parser.parse()
-
     expect(data).toEqual({
       maxItems: 5,
       otherSomething: "should-ignore",
     })
   })
 
-  test("不带前缀且排除某个key", () => {
-    const parser = new DatasetParser(element2, {
+  it("不带前缀且排除某个key", () => {
+    const data = datasetConfig(element2, {
       excludeKeys: ["age"],
     })
-    const data = parser.parse()
 
     expect(data).toEqual({
       direction: "horizontal",
@@ -116,11 +117,10 @@ describe("DatasetParser", () => {
     })
   })
 
-  test("排除某个带有连字符-的key", () => {
-    const parser = new DatasetParser(element2, {
+  it("排除某个带有连字符-的key", () => {
+    const data = datasetConfig(element2, {
       excludeKeys: ["foo-bar"],
     })
-    const data = parser.parse()
 
     expect(data).toEqual({
       direction: "horizontal",
@@ -129,10 +129,10 @@ describe("DatasetParser", () => {
     })
   })
 
-  test("测试无效的JSON字符串", () => {
+  it("测试无效的JSON字符串", () => {
     element.setAttribute("data-invalid", "{ key: value }") // invalid JSON
-    const parser = new DatasetParser(element)
-    const data = parser.parse()
+
+    const data = datasetConfig(element)
 
     expect(data.invalid).toBe("{ key: value }")
   })

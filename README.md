@@ -8,7 +8,6 @@
 [![Test](https://img.shields.io/github/actions/workflow/status/ajiho/dataset-config/test.yml?label=Test&logo=github&style=flat-square&branch=main)](https://github.com/ajiho/dataset-config/actions/workflows/test.yml)
 [![Vitest](https://img.shields.io/badge/tested%20with-vitest-fcc72b.svg?logo=vitest)](https://vitest.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajiho/dataset-config/blob/main/LICENSE)
-[![size limit](https://img.shields.io/badge/size%20limit-520B-brightgreen.svg)](https://github.com/ajiho/dataset-config/blob/main/configs/size-limit.mjs)
 
 ---
 
@@ -20,7 +19,7 @@
 ## 特性
 
 - 零依赖
-- 体积极小
+- 体积极小(minified and brotlied: <= 520B)
 - 支持 true/false/number/JSON 自动解析
 - 支持前缀过滤
 - 支持无限层点语法对象解析
