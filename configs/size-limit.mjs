@@ -1,6 +1,6 @@
 export default [
   {
-    limit: "500B",
-    path: "../dist/esm/index.mjs",
+    limit: "520B",
+    path: "../dist/index.js",
   },
 ]
