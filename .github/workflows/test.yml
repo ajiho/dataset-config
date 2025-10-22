@@ -1,6 +1,9 @@
 name: Run tests and upload coverage
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -14,6 +17,8 @@ jobs:
 
       - name: Set up Node
         uses: actions/setup-node@v4
+        with:
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install

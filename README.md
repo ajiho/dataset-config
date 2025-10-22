@@ -1,10 +1,14 @@
 # dataset-config
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee)](https://www.lujiahao.com/sponsor)
-[![npm](https://img.shields.io/npm/v/dataset-config)](https://www.npmjs.com/package/dataset-config)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+[![npm version](https://img.shields.io/npm/v/dataset-config)](https://www.npmjs.com/package/dataset-config)
 [![cdn version](https://data.jsdelivr.com/v1/package/npm/dataset-config/badge)](https://www.jsdelivr.com/package/npm/dataset-config)
 [![codecov](https://codecov.io/gh/ajiho/dataset-config/graph/badge.svg?token=G2P1AI238H)](https://codecov.io/gh/ajiho/dataset-config)
-[![Test](https://img.shields.io/github/actions/workflow/status/ajiho/dataset-config/test.yml?label=Unit%20Test&branch=main)](https://github.com/ajiho/dataset-config/actions/workflows/test.yml)
+[![Test](https://img.shields.io/github/actions/workflow/status/ajiho/dataset-config/test.yml?label=Test&logo=github&style=flat-square&branch=main)](https://github.com/ajiho/dataset-config/actions/workflows/test.yml)
+[![Vitest](https://img.shields.io/badge/tested%20with-vitest-fcc72b.svg?logo=vitest)](https://vitest.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajiho/dataset-config/blob/main/LICENSE)
+[![size limit](https://img.shields.io/badge/size%20limit-520B-brightgreen.svg)](https://github.com/ajiho/dataset-config/blob/main/configs/size-limit.mjs)
 
 ---
 
@@ -16,7 +20,7 @@
 ## 特性
 
 - 零依赖
-- 超小的体积(minified and brotlied: <= 500B)
+- 体积极小
 - 支持 true/false/number/JSON 自动解析
 - 支持前缀过滤
 - 支持无限层点语法对象解析
