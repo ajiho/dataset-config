@@ -12,4 +12,14 @@ export default {
   trailingComma: "all",
   //缩进占两个tab
   tabWidth: 2,
+  plugins: ["prettier-plugin-sort-pkgjson"],
+  overrides: [
+    {
+      files: "package.json",
+      options: {
+        parser: "sort-package-json",
+        packageJsonIgnoreSortKeys: ["scripts", "exports"],
+      },
+    },
+  ],
 }

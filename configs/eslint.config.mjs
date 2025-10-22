@@ -1,46 +1,60 @@
-import js from "@eslint/js"
+import { defineConfig, globalIgnores } from "eslint/config"
+import eslint from "@eslint/js"
+import tseslint from "typescript-eslint"
+import eslintPluginPrettier from "eslint-plugin-prettier"
 import globals from "globals"
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import eslintPluginUnicorn from "eslint-plugin-unicorn"
 
-export default [
-  //继承eslint的推荐规则
-  js.configs.recommended,
+const ignores = [
+  "**/dist/**",
+  "**/__tests__/**",
+  "**/configs/**",
+  "**/node_modules/**",
+  ".*",
+  "scripts/**",
+  "**/*.d.ts",
+]
+
+export default defineConfig([
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  eslintConfigPrettier,
+  globalIgnores(ignores),
+  // 通用配置
   {
-    //语言选项
-    languageOptions: {
-      //es6
-      ecmaVersion: 2022,
-      //类型 module:模块  script:脚本
-      sourceType: "module",
-      //全局变量
-      globals: {
-        ...globals.jquery,
-        ...globals.browser,
-        ...globals.es2015,
-        ...globals.builtin,
-        // 自定义的全局变量
-      },
-    },
     plugins: {
+      prettier: eslintPluginPrettier,
       unicorn: eslintPluginUnicorn,
     },
-    linterOptions: {
-      noInlineConfig: false,
-      reportUnusedDisableDirectives: "warn",
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser: tseslint.parser,
     },
-    //具体规则
     rules: {
-      "no-var": 2, // 不能使用 var 定义变量
-      //临时关闭未使用变量报错
-      "no-unused-vars": 0,
-      //临时关闭未使用私有变量报错的问题
-      "no-unused-private-class-members": 0,
-      "unicorn/no-array-for-each": "warn",
+      // 自定义
+      "no-var": "error", //禁止使用var
+      "@typescript-eslint/no-unused-vars": "error",
+
+      "@typescript-eslint/ban-ts-comment": [
+        "error",
+        {
+          "ts-expect-error": "allow-with-description",
+          "ts-ignore": true,
+          "ts-nocheck": false,
+          "ts-check": true,
+        },
+      ],
     },
   },
-  // eslint flat类型的配置 已经不支持.eslintignore这个配置文件,只支持从eslint.config.mjs或者cli上指定--ignore-pattern配置忽略文件
-  //https://github.com/eslint/eslint/issues/17831
   {
-    ignores: ["configs"],
+    ignores,
+    files: ["src/**/*.{ts}"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
   },
-]
+])

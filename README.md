@@ -36,56 +36,71 @@
 
 ## 用法
 
+想象页面上有以下html结构：
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dataset-config Demo</title>
+  </head>
+  <body>
+    <div
+      id="demo"
+      data-toggle="plugin"
+      data-touch-delay="300"
+      data-style.z-index="10000"
+      data-position.x="100"
+      data-position.y="200"
+      data-draggable="true"
+      data-direction="horizontal"
+      data-app-max-items="5"
+      data-app-other-something="should-ignore"
+      data-options='{"a":1,"b":[2,3]}'
+      data-rect="[2,3]"
+      data-config.foo.bar="hello"
+      data-config.foo.enable="true"
+      data-on-init="init"
+    ></div>
+
+    <script>
+      function init() {
+        console.log("this is global")
+      }
+    </script>
+  </body>
+</html>
+```
+
+然后我们使用`dataset-config`解析数据
+
 ```js
-import datasetConfig from "datasetConfig"
+import datasetConfig from "dataset-config"
 
-const options = datasetConfig(el, {})
+const options = datasetConfig(document.querySelector("#demo"), {})
+```
 
-// 例子
-/* <div
-  data-toggle="plugin"
-  data-touch-delay="300"
-  data-style.z-index="10000"
-  data-position.x="100"
-  data-position.y="200"
-  data-draggable="true"
-  data-direction="horizontal"
-  data-app-max-items="5"
-  data-app-other-something="should-ignore"
-  data-options='{"a":1,"b":[2,3]}'
-  data-rect="[2,3]"
-  data-config.foo.bar="hello"
-  data-on-init="init"
-></div> */
+解析得到的`options`结果如下：
 
-// options的解析结果如下:
-
-/* {
+```js
+const options = {
   toggle: "plugin",
   touchDelay: 300,
-  style: {
-    zIndex: 10000,
-  },
-  position: {
-    x: 100,
-    y: 200,
-  },
+  style: { zIndex: 10000 },
+  position: { x: 100, y: 200 },
   draggable: true,
-  onInit: func,
   direction: "horizontal",
   appMaxItems: 5,
   appOtherSomething: "should-ignore",
-  options: {
-    a: 1,
-    b: [2, 3],
-  },
+  options: { a: 1, b: [2, 3] },
   rect: [2, 3],
-  config: {
-    foo: {
-      bar: "hello",
-    },
+  config: { foo: { bar: "hello", enable: true } },
+  onInit: function init() {
+    console.log("this is global")
   },
-} */
+}
 ```
 
 ## 选项
@@ -115,9 +130,3 @@ let config = datasetConfig(el, {
 ## 变更日志
 
 每个版本的详细更改记录在[CHANGELOG.md](https://github.com/ajiho/dataset-config/blob/main/CHANGELOG.md)中.
-
-## License
-
-[MIT](https://github.com/ajiho/dataset-config/blob/main/LICENSE)
-
-Copyright (c) 2025-present, ajiho

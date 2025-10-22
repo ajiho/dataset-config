@@ -1,3 +1,7 @@
 {
-  "prettier.configPath": "./configs/prettier.config.mjs"
+  "prettier.configPath": "./configs/prettier.config.mjs",
+  "eslint.options": {
+    "overrideConfigFile": "./configs/eslint.config.mjs"
+  },
+  "cSpell.enabled": false
 }

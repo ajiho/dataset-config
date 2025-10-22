@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // 或 ES2022 都可以
+    "module": "ESNext", // 保持模块格式给 bundler 处理
+    "lib": ["DOM", "ES2022"], // DOM + 对应 ECMAScript 标准库
+    "moduleResolution": "Bundler", // 更符合 Vite / Rollup 等现代构建工具
+    "declaration": true, // 生成类型声明文件供使用者使用
+    "outDir": "dist",
+    "strict": true,
+    "skipLibCheck": true,
+    "removeComments": false
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}
