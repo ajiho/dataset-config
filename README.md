@@ -19,7 +19,7 @@
 ## 特性
 
 - 零依赖
-- 体积极小(minified and brotlied: <= 520B)
+- 体积极小(minified and brotlied: <= 0.6KB)
 - 支持 true/false/number/JSON 自动解析
 - 支持前缀过滤
 - 支持无限层点语法对象解析
