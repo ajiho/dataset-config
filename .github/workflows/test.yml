@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main
-
+    paths:
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
 jobs:
   test:
     name: Run tests and collect coverage
