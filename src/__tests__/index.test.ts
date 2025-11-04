@@ -10,6 +10,7 @@ declare global {
 describe("datasetConfig", () => {
   let element: HTMLElement
   let element2: HTMLElement
+  let element3: HTMLElement
 
   beforeEach(() => {
     document.body.innerHTML = `
@@ -36,10 +37,21 @@ describe("datasetConfig", () => {
       data-age="100"
       data-agree="true"
     ></div>
+
+    <div
+      id="element3"
+      data-toggle="plugin"
+      data-config.foo.bar="hello"
+      data-config.foo.enable="true"
+      data-config.foo.delay="3000"
+      data-config.bar.count="42"
+      data-on-init="init"
+    ></div>
     `
     window.init = () => "全局函数"
     element = document.querySelector<HTMLElement>("[data-toggle]")!
     element2 = document.querySelector<HTMLElement>("#element2")!
+    element3 = document.querySelector<HTMLElement>("#element3")!
   })
 
   afterEach(() => {
@@ -135,5 +147,32 @@ describe("datasetConfig", () => {
     const data = datasetConfig(element)
 
     expect(data.invalid).toBe("{ key: value }")
+  })
+
+  it("excludeKeys深度排除:单个键", () => {
+    const data = datasetConfig(element3, {
+      excludeKeys: ["config.foo.delay"],
+    })
+
+    expect(data).toEqual({
+      toggle: "plugin",
+      config: { foo: { bar: "hello", enable: true }, bar: { count: 42 } },
+      onInit: expect.any(Function),
+    })
+    expect(data.onInit).toBe(window.init)
+  })
+
+  it("excludeKeys深度排除:排除整个对象", () => {
+    const data = datasetConfig(element3, {
+      excludeKeys: ["config.foo"],
+    })
+
+    expect(data).toEqual({
+      toggle: "plugin",
+      config: { bar: { count: 42 } },
+      onInit: expect.any(Function),
+    })
+
+    expect(data.onInit).toBe(window.init)
   })
 })

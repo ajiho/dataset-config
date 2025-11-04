@@ -1,21 +1,16 @@
 // 默认参数接口
 export interface DatasetParserOptions {
-  /** 数据属性名称前缀，用于筛选指定前缀的属性 */
   prefix?: string
-  /** 是否将函数名解析为实际的函数引用 */
   parseFunction?: boolean
-  /** 排除的属性名称集合 */
   excludeKeys?: string[]
 }
 
-// 扩展 Window 接口的全局声明
 declare global {
   interface Window {
     [key: string]: unknown
   }
 }
 
-// 默认参数
 const DEFAULT: Required<DatasetParserOptions> = {
   prefix: "",
   parseFunction: true,
@@ -23,27 +18,17 @@ const DEFAULT: Required<DatasetParserOptions> = {
 }
 
 export default class DatasetParser {
-  /** 传入的元素对象 */
   #element: HTMLElement
-
-  /** 用户配置选项 */
   #options: Required<DatasetParserOptions>
-
-  /** 排除的属性名称集合（驼峰格式） */
-  #excludeSet: Set<string>
+  // 存储排除路径（每项为 ["config","foo","delay"]）
+  #excludePaths: string[][]
 
   constructor(element: HTMLElement, options: DatasetParserOptions = {}) {
     this.#element = element
+    this.#options = { ...DEFAULT, ...options }
 
-    // 合并默认选项和用户选项
-    this.#options = {
-      ...DEFAULT,
-      ...options,
-    }
-
-    // 将排除的属性名称转换为驼峰格式并存储为 Set
-    this.#excludeSet = new Set(
-      this.#options.excludeKeys.map((key) => this.#toCamelCase(key)),
+    this.#excludePaths = this.#options.excludeKeys.map((path) =>
+      this.#normalizePath(path),
     )
   }
 
@@ -55,32 +40,41 @@ export default class DatasetParser {
       const value = this.#element.dataset[key]
       if (value === undefined) continue
 
+      let realKey: string
       if (this.#options.prefix) {
-        // 如果设置了前缀且属性名称不匹配，则跳过
         if (!key.startsWith(this.#options.prefix)) continue
-
-        // 去除前缀后的属性名称,并转换为小驼峰格式
-        const realKey = this.#pascalToCamel(key.slice(prefixLength))
-
-        // 取基础名称（用于排除检查）
-        const baseKey = realKey.split(".")[0]
-
-        if (this.#excludeSet.has(baseKey)) continue
-
-        // 深度设置属性值
-        this.#setDeepProperty(data, realKey, this.#parseValue(value))
+        realKey = this.#pascalToCamel(key.slice(prefixLength))
       } else {
-        // 没有前缀
-        const camelKey = this.#toCamelCase(key)
-        const baseKey = camelKey.split(".")[0]
-
-        if (this.#excludeSet.has(baseKey)) continue
-
-        this.#setDeepProperty(data, camelKey, this.#parseValue(value))
+        realKey = this.#toCamelCase(key)
       }
+
+      // 检查是否被排除
+      if (this.#isExcluded(realKey)) continue
+
+      this.#setDeepProperty(data, realKey, this.#parseValue(value))
     }
 
     return data
+  }
+
+  // 检查某路径是否在排除列表内（支持深层路径匹配）
+  #isExcluded(keyPath: string): boolean {
+    const targetPath = this.#normalizePath(keyPath)
+
+    return this.#excludePaths.some((excludePath) => {
+      // 如果 excludePath 是 targetPath 的前缀，则匹配
+      if (excludePath.length <= targetPath.length) {
+        return excludePath.every((part, i) => part === targetPath[i])
+      }
+      return false
+    })
+  }
+
+  // 规范化路径为小驼峰数组
+  #normalizePath(path: string): string[] {
+    return this.#toCamelCase(path)
+      .split(".")
+      .map((p) => this.#pascalToCamel(p))
   }
 
   #setDeepProperty(
@@ -98,7 +92,6 @@ export default class DatasetParser {
         if (!temp[key] || typeof temp[key] !== "object") {
           temp[key] = {}
         }
-        // 使用类型断言
         temp = temp[key] as Record<string, unknown>
       }
     }
@@ -129,20 +122,10 @@ export default class DatasetParser {
     return val
   }
 
-  /**
-   * 将连字符格式转换为驼峰格式
-   * @param str - 要转换的字符串
-   * @returns 转换后的驼峰格式字符串
-   */
   #toCamelCase(str: string): string {
     return str.replace(/-([a-z])/g, (_, p1) => p1.toUpperCase())
   }
 
-  /**
-   * 将 PascalCase 转换为 camelCase
-   * @param str - 要转换的 PascalCase 字符串
-   * @returns 转换后的 camelCase 字符串
-   */
   #pascalToCamel(str: string): string {
     return str.charAt(0).toLowerCase() + str.slice(1)
   }
