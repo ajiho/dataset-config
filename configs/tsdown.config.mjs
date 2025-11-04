@@ -3,6 +3,7 @@ import { defineConfig } from "tsdown"
 const commonConfig = {
   entry: ["src/index.ts"],
   sourcemap: true,
+  clean: false,
 }
 
 const sharedOutputOptions = {
@@ -21,7 +22,6 @@ let config = defineConfig([
   },
   {
     ...commonConfig,
-    clean: false,
     format: "iife",
     minify: isProd,
     outputOptions: {
@@ -31,7 +31,7 @@ let config = defineConfig([
   },
   {
     ...commonConfig,
-    clean: false,
+
     format: "umd",
     minify: isProd,
     outputOptions: {
