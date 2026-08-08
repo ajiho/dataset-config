@@ -2,8 +2,9 @@
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee)](https://www.lujiahao.com/sponsor)
 [![npm version](https://img.shields.io/npm/v/dataset-config)](https://www.npmjs.com/package/dataset-config)
-[![Test](https://img.shields.io/github/actions/workflow/status/ColorlabHQ/dataset-config/test.yml?label=Test&logo=github&style=flat-square&branch=main)](https://github.com/ColorlabHQ/dataset-config/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/gh/ColorlabHQ/dataset-config/graph/badge.svg?token=G2P1AI238H)](https://codecov.io/gh/ColorlabHQ/dataset-config)
+[![Test](https://img.shields.io/github/actions/workflow/status/ColorlabHQ/dataset-config/tests.yml?label=Test&logo=github&style=flat-square&branch=main)](https://github.com/ColorlabHQ/dataset-config/actions/workflows/tests.yml)
+[![bundle size](https://deno.bundlejs.com/?q=dataset-config&badge=detailed)](https://bundlejs.com/?q=dataset-config)
+[![codecov](https://codecov.io/github/ColorlabHQ/dataset-config/graph/badge.svg?token=YR846BMB6Y)](https://codecov.io/github/ColorlabHQ/dataset-config)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ColorlabHQ/dataset-config/blob/main/LICENSE)
 [![Changelog](https://img.shields.io/badge/changelog-%F0%9F%93%9D-blue)](https://github.com/ColorlabHQ/dataset-config/blob/main/CHANGELOG.md)
 ---
