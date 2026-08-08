@@ -10,6 +10,13 @@
 
 - **ci:** 测试脚本更新 ([d24aeda](https://github.com/ajiho/dataset-config/commit/d24aedabf1dc1694477a84b3315e19e896458530))
 
+## [1.3.0](https://github.com/ColorlabHQ/dataset-config/compare/v1.2.0...v1.3.0) (2026-08-08)
+
+
+### Features
+
+* 支持多层级前缀、从类改成纯函数、preifx，excludeKeys都支持传入kebab-case格式 ([e286440](https://github.com/ColorlabHQ/dataset-config/commit/e2864406b6d6ad0b14e3a9fa342e2e0d40abf7ec))
+
 ## 1.0.0 (2025-05-17)
 
 - chore: first commit ([874fd4c](https://github.com/ajiho/dataset-config/commit/874fd4c))
