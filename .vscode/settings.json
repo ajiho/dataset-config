@@ -1,7 +1,9 @@
 {
-  "prettier.configPath": "./configs/prettier.config.mjs",
-  "eslint.options": {
-    "overrideConfigFile": "./configs/eslint.config.mjs"
+  "npm.scriptHover": false,
+  "cSpell.enabled": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
   },
-  "cSpell.enabled": false
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true
 }
